@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import UploadZone from "./UploadZone";
 import MaskCanvas, { type MaskCanvasHandle } from "./MaskCanvas";
 import { processImage, type ProcessResult } from "@/utils/imageProcessor";
+import MaterialLibrary from "./MaterialLibrary";
 
 interface BusinessDashboardProps {
   onBack: () => void;
@@ -260,6 +261,7 @@ export default function BusinessDashboard({ onBack }: BusinessDashboardProps) {
             )}
           </div>
         </div>
+        <MaterialLibrary accent="emerald" onSelect={setPrompt} />
       </div>
     </div>
   );

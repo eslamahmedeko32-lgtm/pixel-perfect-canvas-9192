@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import UploadZone from "./UploadZone";
 import MaskCanvas, { type MaskCanvasHandle } from "./MaskCanvas";
 import { processImage, type ProcessResult } from "@/utils/imageProcessor";
+import MaterialLibrary from "./MaterialLibrary";
 
 interface ProDashboardProps {
   onBack: () => void;
@@ -15,15 +16,6 @@ const LAYERS = [
   { name: "الإضاءة (Lighting)", visible: true, opacity: 70 },
   { name: "الإكسسوارات (Decor)", visible: false, opacity: 60 },
   { name: "الظلال (Shadows)", visible: true, opacity: 50 },
-];
-
-const MATERIALS = [
-  { name: "خشب طبيعي", color: "from-amber-700 to-amber-900" },
-  { name: "رخام أبيض", color: "from-slate-200 to-slate-400" },
-  { name: "حجر رملي", color: "from-orange-300 to-orange-600" },
-  { name: "زجاج ملون", color: "from-cyan-400 to-blue-600" },
-  { name: "خرسانة معرّضة", color: "from-gray-400 to-gray-600" },
-  { name: "ذهبي لامع", color: "from-yellow-400 to-amber-600" },
 ];
 
 export default function ProDashboard({ onBack }: ProDashboardProps) {
@@ -286,18 +278,7 @@ export default function ProDashboard({ onBack }: ProDashboardProps) {
                   ))}
                 </div>
               ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {MATERIALS.map((mat) => (
-                    <button
-                      key={mat.name}
-                      onClick={() => setPrompt((prev) => (prev ? prev + " " + mat.name : mat.name))}
-                      className="group flex flex-col items-center gap-2 p-3 rounded-xl bg-slate-950/60 border border-slate-800/60 hover:border-blue-500/40 transition-colors"
-                    >
-                      <div className={`w-full h-12 rounded-lg bg-gradient-to-br ${mat.color} group-hover:scale-105 transition-transform`} />
-                      <span className="text-xs text-slate-400">{mat.name}</span>
-                    </button>
-                  ))}
-                </div>
+                <MaterialLibrary accent="blue" compact onSelect={(value) => setPrompt((prev) => (prev ? `${prev}، ${value}` : value))} />
               )}
             </div>
           </div>
