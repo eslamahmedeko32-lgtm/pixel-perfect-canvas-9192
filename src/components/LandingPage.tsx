@@ -1,4 +1,4 @@
-import { Building2, Palette, Sofa, ArrowLeft, Sparkles, Wand2, Zap, Shield } from "lucide-react";
+import { Building2, Palette, Sofa, ArrowLeft, Sparkles, Wand2, Zap, Shield, Cpu } from "lucide-react";
 import { MODES, type AppMode } from "@/types";
 
 const ICONS = { Building2, Palette, Sofa } as const;
@@ -35,9 +35,10 @@ const ACCENT_STYLES: Record<
 
 interface LandingPageProps {
   onSelect: (mode: AppMode) => void;
+  onOpenLab: () => void;
 }
 
-export default function LandingPage({ onSelect }: LandingPageProps) {
+export default function LandingPage({ onSelect, onOpenLab }: LandingPageProps) {
   return (
     <div className="min-h-screen bg-slate-950 text-white relative overflow-hidden">
       {/* Background layers */}
@@ -110,6 +111,22 @@ export default function LandingPage({ onSelect }: LandingPageProps) {
             );
           })}
         </div>
+
+        {/* Smart engines lab entry */}
+        <button
+          onClick={onOpenLab}
+          className="group mt-10 inline-flex items-center gap-3 bg-slate-900/80 border border-slate-800 hover:border-blue-500/60 px-6 py-3.5 rounded-2xl transition-all duration-300 hover:-translate-y-0.5 shadow-xl hover:shadow-blue-500/10 animate-fade-in-up"
+          style={{ animationDelay: "0.5s" }}
+        >
+          <span className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 transition-transform group-hover:scale-110">
+            <Cpu className="w-5 h-5" />
+          </span>
+          <span className="text-right">
+            <span className="block text-sm font-bold text-white">مختبر المحرّكات الذكية</span>
+            <span className="block text-xs text-slate-400">تسعير متعلّم · رؤية حاسوبية · مطابقة مقاولين · خط إنتاج</span>
+          </span>
+          <ArrowLeft className="w-4 h-4 text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+        </button>
 
         {/* Feature strip */}
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 mt-16 text-slate-500 text-sm">
