@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import UploadZone from "./UploadZone";
 import MaskCanvas, { type MaskCanvasHandle } from "./MaskCanvas";
 import { processImage, type ProcessResult } from "@/utils/imageProcessor";
+import MaterialLibrary from "./MaterialLibrary";
 
 interface PersonalDashboardProps {
   onBack: () => void;
@@ -264,6 +265,7 @@ export default function PersonalDashboard({ onBack }: PersonalDashboardProps) {
             )}
           </div>
         </div>
+        <MaterialLibrary accent="amber" onSelect={setPrompt} />
       </div>
     </div>
   );
