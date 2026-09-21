@@ -113,7 +113,7 @@ function applyEffectsToCtx(
       case "tint": {
         ctx.save();
         ctx.globalCompositeOperation = "overlay";
-        ctx.fillStyle = `rgba(${p.r}, ${p.g}, ${p.b}, ${p.intensity})`;
+        ctx.fillStyle = `rgba(${p['r']}, ${p['g']}, ${p['b']}, ${p['intensity']})`;
         ctx.fillRect(0, 0, width, height);
         ctx.restore();
         break;
@@ -121,10 +121,10 @@ function applyEffectsToCtx(
       case "warm": {
         ctx.save();
         ctx.globalCompositeOperation = "overlay";
-        ctx.fillStyle = `rgba(255, 140, 40, ${(p.warmth as number) / 100})`;
+        ctx.fillStyle = `rgba(255, 140, 40, ${(p['warmth'] as number) / 100})`;
         ctx.fillRect(0, 0, width, height);
-        if (p.saturation) {
-          ctx.filter = `saturate(${p.saturation})`;
+        if (p['saturation']) {
+          ctx.filter = `saturate(${p['saturation']})`;
           ctx.drawImage(ctx.canvas, 0, 0);
           ctx.filter = "none";
         }
@@ -134,10 +134,10 @@ function applyEffectsToCtx(
       case "cool": {
         ctx.save();
         ctx.globalCompositeOperation = "overlay";
-        ctx.fillStyle = `rgba(40, 100, 255, ${(p.coolness as number) / 100})`;
+        ctx.fillStyle = `rgba(40, 100, 255, ${(p['coolness'] as number) / 100})`;
         ctx.fillRect(0, 0, width, height);
-        if (p.saturation) {
-          ctx.filter = `saturate(${p.saturation})`;
+        if (p['saturation']) {
+          ctx.filter = `saturate(${p['saturation']})`;
           ctx.drawImage(ctx.canvas, 0, 0);
           ctx.filter = "none";
         }
@@ -145,34 +145,34 @@ function applyEffectsToCtx(
         break;
       }
       case "bright": {
-        ctx.filter = `brightness(${p.brightness || 1.1}) contrast(${p.contrast || 1.05})`;
-        if (p.saturation) ctx.filter += ` saturate(${p.saturation})`;
-        if (p.coolness) ctx.filter += ` hue-rotate(-${p.coolness}deg)`;
+        ctx.filter = `brightness(${p['brightness'] || 1.1}) contrast(${p['contrast'] || 1.05})`;
+        if (p['saturation']) ctx.filter += ` saturate(${p['saturation']})`;
+        if (p['coolness']) ctx.filter += ` hue-rotate(-${p['coolness']}deg)`;
         ctx.drawImage(ctx.canvas, 0, 0);
         ctx.filter = "none";
         break;
       }
       case "dark": {
-        ctx.filter = `brightness(${p.brightness || 0.85}) contrast(${p.contrast || 1.15}) saturate(${p.saturation || 1.1})`;
+        ctx.filter = `brightness(${p['brightness'] || 0.85}) contrast(${p['contrast'] || 1.15}) saturate(${p['saturation'] || 1.1})`;
         ctx.drawImage(ctx.canvas, 0, 0);
         ctx.filter = "none";
         break;
       }
       case "modern": {
-        ctx.filter = `contrast(${p.contrast || 1.1}) saturate(${p.saturation || 1.05}) brightness(${p.brightness || 1.05})`;
+        ctx.filter = `contrast(${p['contrast'] || 1.1}) saturate(${p['saturation'] || 1.05}) brightness(${p['brightness'] || 1.05})`;
         ctx.drawImage(ctx.canvas, 0, 0);
         ctx.filter = "none";
         break;
       }
       case "vintage": {
-        ctx.filter = `sepia(${p.sepia || 0.3}) contrast(${p.contrast || 1.1})`;
+        ctx.filter = `sepia(${p['sepia'] || 0.3}) contrast(${p['contrast'] || 1.1})`;
         ctx.drawImage(ctx.canvas, 0, 0);
         ctx.filter = "none";
-        if (p.vignette) {
+        if (p['vignette']) {
           ctx.save();
           const grad = ctx.createRadialGradient(width / 2, height / 2, Math.min(width, height) * 0.3, width / 2, height / 2, Math.max(width, height) * 0.7);
           grad.addColorStop(0, "rgba(0,0,0,0)");
-          grad.addColorStop(1, `rgba(0,0,0,${p.vignette})`);
+          grad.addColorStop(1, `rgba(0,0,0,${p['vignette']})`);
           ctx.fillStyle = grad;
           ctx.fillRect(0, 0, width, height);
           ctx.restore();
@@ -180,12 +180,12 @@ function applyEffectsToCtx(
         break;
       }
       case "metallic": {
-        ctx.filter = `contrast(${p.contrast || 1.2}) brightness(${p.brightness || 0.95}) saturate(0.7)`;
+        ctx.filter = `contrast(${p['contrast'] || 1.2}) brightness(${p['brightness'] || 0.95}) saturate(0.7)`;
         ctx.drawImage(ctx.canvas, 0, 0);
         ctx.filter = "none";
         ctx.save();
         ctx.globalCompositeOperation = "overlay";
-        ctx.fillStyle = `rgba(180, 180, 200, ${p.metallic || 0.3})`;
+        ctx.fillStyle = `rgba(180, 180, 200, ${p['metallic'] || 0.3})`;
         ctx.fillRect(0, 0, width, height);
         ctx.restore();
         break;
@@ -194,8 +194,8 @@ function applyEffectsToCtx(
         ctx.save();
         ctx.globalCompositeOperation = "screen";
         const grad = ctx.createRadialGradient(width / 2, height / 3, 0, width / 2, height / 3, width * 0.6);
-        const glowColor = p.glowColor === "emerald" ? "16, 185, 129" : p.glowColor === "blue" ? "59, 130, 246" : "245, 158, 11";
-        grad.addColorStop(0, `rgba(${glowColor}, ${(p.glowStrength as number) / 100})`);
+        const glowColor = p['glowColor'] === "emerald" ? "16, 185, 129" : p['glowColor'] === "blue" ? "59, 130, 246" : "245, 158, 11";
+        grad.addColorStop(0, `rgba(${glowColor}, ${(p['glowStrength'] as number) / 100})`);
         grad.addColorStop(1, "rgba(0,0,0,0)");
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, width, height);
@@ -203,7 +203,7 @@ function applyEffectsToCtx(
         break;
       }
       case "glass": {
-        ctx.filter = `brightness(${p.brightness || 1.1}) contrast(${p.contrast || 1.05}) hue-rotate(-${p.blueShift || 10}deg) saturate(0.9)`;
+        ctx.filter = `brightness(${p['brightness'] || 1.1}) contrast(${p['contrast'] || 1.05}) hue-rotate(-${p['blueShift'] || 10}deg) saturate(0.9)`;
         ctx.drawImage(ctx.canvas, 0, 0);
         ctx.filter = "none";
         ctx.save();
@@ -218,33 +218,33 @@ function applyEffectsToCtx(
         break;
       }
       case "desaturate": {
-        ctx.filter = `saturate(${p.saturation || 0.7}) contrast(${p.contrast || 1.1})`;
+        ctx.filter = `saturate(${p['saturation'] || 0.7}) contrast(${p['contrast'] || 1.1})`;
         ctx.drawImage(ctx.canvas, 0, 0);
         ctx.filter = "none";
         break;
       }
       case "minimal": {
-        ctx.filter = `saturate(${p.saturation || 0.85}) brightness(${p.brightness || 1.08}) contrast(${p.contrast || 1.05})`;
+        ctx.filter = `saturate(${p['saturation'] || 0.85}) brightness(${p['brightness'] || 1.08}) contrast(${p['contrast'] || 1.05})`;
         ctx.drawImage(ctx.canvas, 0, 0);
         ctx.filter = "none";
         break;
       }
       case "luxury": {
-        ctx.filter = `contrast(${p.contrast || 1.15}) saturate(${p.saturation || 1.1}) brightness(1.02)`;
+        ctx.filter = `contrast(${p['contrast'] || 1.15}) saturate(${p['saturation'] || 1.1}) brightness(1.02)`;
         ctx.drawImage(ctx.canvas, 0, 0);
         ctx.filter = "none";
-        if (p.warmth) {
+        if (p['warmth']) {
           ctx.save();
           ctx.globalCompositeOperation = "overlay";
-          ctx.fillStyle = `rgba(255, 180, 60, ${(p.warmth as number) / 100})`;
+          ctx.fillStyle = `rgba(255, 180, 60, ${(p['warmth'] as number) / 100})`;
           ctx.fillRect(0, 0, width, height);
           ctx.restore();
         }
-        if (p.vignette) {
+        if (p['vignette']) {
           ctx.save();
           const grad = ctx.createRadialGradient(width / 2, height / 2, Math.min(width, height) * 0.35, width / 2, height / 2, Math.max(width, height) * 0.7);
           grad.addColorStop(0, "rgba(0,0,0,0)");
-          grad.addColorStop(1, `rgba(0,0,0,${p.vignette})`);
+          grad.addColorStop(1, `rgba(0,0,0,${p['vignette']})`);
           ctx.fillStyle = grad;
           ctx.fillRect(0, 0, width, height);
           ctx.restore();
@@ -252,13 +252,13 @@ function applyEffectsToCtx(
         break;
       }
       case "texture": {
-        ctx.filter = `contrast(${p.contrast || 1.15}) saturate(${p.saturation || 0.9})`;
+        ctx.filter = `contrast(${p['contrast'] || 1.15}) saturate(${p['saturation'] || 0.9})`;
         ctx.drawImage(ctx.canvas, 0, 0);
         ctx.filter = "none";
-        if (p.warmth) {
+        if (p['warmth']) {
           ctx.save();
           ctx.globalCompositeOperation = "overlay";
-          ctx.fillStyle = `rgba(200, 160, 100, ${(p.warmth as number) / 100})`;
+          ctx.fillStyle = `rgba(200, 160, 100, ${(p['warmth'] as number) / 100})`;
           ctx.fillRect(0, 0, width, height);
           ctx.restore();
         }
