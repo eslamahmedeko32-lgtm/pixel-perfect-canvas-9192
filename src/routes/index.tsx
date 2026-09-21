@@ -1,24 +1,38 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import LandingPage from "@/components/LandingPage";
+import BusinessDashboard from "@/components/BusinessDashboard";
+import ProDashboard from "@/components/ProDashboard";
+import PersonalDashboard from "@/components/PersonalDashboard";
+import type { AppMode } from "@/types";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "ديكور AI — تصميم الواجهات والديكور الداخلي بالذكاء الاصطناعي" },
+      {
+        name: "description",
+        content:
+          "ارفع صورة واجهتك أو غرفتك واكتب طلبك بالعربية لتحصل على تصميم جديد فوراً: واجهات، كلادنج، نيون، وتجديد المنازل.",
+      },
+      { property: "og:title", content: "ديكور AI — تصميم بالذكاء الاصطناعي" },
+      {
+        property: "og:description",
+        content: "تصميم واجهات المحال وتجديد المنازل بنقرة واحدة، بالعربية.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+  const [mode, setMode] = useState<AppMode | null>(null);
+
+  if (mode === "business") return <BusinessDashboard onBack={() => setMode(null)} />;
+  if (mode === "pro") return <ProDashboard onBack={() => setMode(null)} />;
+  if (mode === "personal") return <PersonalDashboard onBack={() => setMode(null)} />;
+
+  return <LandingPage onSelect={setMode} />;
 }
