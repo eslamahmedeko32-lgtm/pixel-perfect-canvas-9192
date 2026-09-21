@@ -1,5 +1,5 @@
-import { useRef, useState, type ReactNode } from "react";
-import { UploadCloud, ImageIcon, Loader2, Sparkles, AlertCircle } from "lucide-react";
+import { useRef, useState, useEffect, type ReactNode } from "react";
+import { UploadCloud, ImageIcon, Loader2, Sparkles, AlertCircle, Camera, X } from "lucide-react";
 
 interface UploadZoneProps {
   accent: "emerald" | "blue" | "amber";
@@ -23,6 +23,7 @@ const ACCENT: Record<
     iconText: string;
     focusBorder: string;
     errorBorder: string;
+    softBtn: string;
   }
 > = {
   emerald: {
@@ -32,6 +33,7 @@ const ACCENT: Record<
     iconText: "text-emerald-400",
     focusBorder: "focus:border-emerald-500",
     errorBorder: "border-red-500/60",
+    softBtn: "border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/10",
   },
   blue: {
     btn: "bg-blue-600 hover:bg-blue-500",
@@ -40,6 +42,7 @@ const ACCENT: Record<
     iconText: "text-blue-400",
     focusBorder: "focus:border-blue-500",
     errorBorder: "border-red-500/60",
+    softBtn: "border-blue-500/30 text-blue-300 hover:bg-blue-500/10",
   },
   amber: {
     btn: "bg-amber-600 hover:bg-amber-500",
@@ -48,6 +51,7 @@ const ACCENT: Record<
     iconText: "text-amber-400",
     focusBorder: "focus:border-amber-500",
     errorBorder: "border-red-500/60",
+    softBtn: "border-amber-500/30 text-amber-300 hover:bg-amber-500/10",
   },
 };
 
@@ -69,10 +73,65 @@ export default function UploadZone({
   const inputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const objectUrlRef = useRef<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
   const [dragging, setDragging] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [cameraActive, setCameraActive] = useState(false);
   const s = ACCENT[accent];
+
+  const stopCamera = () => {
+    streamRef.current?.getTracks().forEach((track) => track.stop());
+    streamRef.current = null;
+    setCameraActive(false);
+  };
+
+  // Release camera + object URL when the component unmounts
+  useEffect(() => {
+    return () => {
+      streamRef.current?.getTracks().forEach((track) => track.stop());
+      if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
+    };
+  }, []);
+
+  const startCamera = async () => {
+    setError(null);
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setError("الكاميرا غير مدعومة في هذا المتصفح");
+      return;
+    }
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" },
+      });
+      streamRef.current = stream;
+      setCameraActive(true);
+      if (videoRef.current) videoRef.current.srcObject = stream;
+    } catch {
+      setError("تعذر الوصول إلى الكاميرا — يرجى السماح بالأذونات");
+    }
+  };
+
+  const capturePhoto = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+      if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
+      const url = URL.createObjectURL(blob);
+      objectUrlRef.current = url;
+      setFileName("صورة الكاميرا.png");
+      onImageChange?.(url);
+      stopCamera();
+    }, "image/png");
+  };
 
   const handleFile = (file?: File) => {
     if (!file) return;
@@ -149,6 +208,42 @@ export default function UploadZone({
           )}
         </div>
       </div>
+
+      {/* Camera capture */}
+      {!cameraActive && (
+        <button
+          type="button"
+          onClick={startCamera}
+          className={`w-full flex items-center justify-center gap-2 border rounded-xl px-4 py-3 text-sm font-medium bg-slate-950/40 transition-colors ${s.softBtn}`}
+        >
+          <Camera className="w-4 h-4" />
+          التقاط صورة بالكاميرا
+        </button>
+      )}
+
+      {cameraActive && (
+        <div className="relative rounded-xl overflow-hidden border border-slate-700/60 bg-black animate-fade-in">
+          <video ref={videoRef} autoPlay playsInline muted className="w-full max-h-72 object-contain" />
+          <button
+            type="button"
+            onClick={stopCamera}
+            aria-label="إغلاق الكاميرا"
+            className="absolute top-2 left-2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
+          <div className="absolute bottom-0 inset-x-0 flex justify-center p-3 bg-gradient-to-t from-black/70 to-transparent">
+            <button
+              type="button"
+              onClick={capturePhoto}
+              className={`${s.btn} px-6 py-2.5 rounded-xl font-semibold text-white flex items-center gap-2 transition-all`}
+            >
+              <Camera className="w-4 h-4" />
+              التقاط
+            </button>
+          </div>
+        </div>
+      )}
 
       {error && (
         <div className="flex items-center gap-2 text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 animate-fade-in">
