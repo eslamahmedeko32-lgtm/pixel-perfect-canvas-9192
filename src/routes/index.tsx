@@ -4,6 +4,7 @@ import LandingPage from "@/components/LandingPage";
 import BusinessDashboard from "@/components/BusinessDashboard";
 import ProDashboard from "@/components/ProDashboard";
 import PersonalDashboard from "@/components/PersonalDashboard";
+import EnginesLab from "@/components/EnginesLab";
 import type { AppMode } from "@/types";
 
 export const Route = createFileRoute("/")({
@@ -29,10 +30,12 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [mode, setMode] = useState<AppMode | null>(null);
+  const [showLab, setShowLab] = useState(false);
 
+  if (showLab) return <EnginesLab onBack={() => setShowLab(false)} />;
   if (mode === "business") return <BusinessDashboard onBack={() => setMode(null)} />;
   if (mode === "pro") return <ProDashboard onBack={() => setMode(null)} />;
   if (mode === "personal") return <PersonalDashboard onBack={() => setMode(null)} />;
 
-  return <LandingPage onSelect={setMode} />;
+  return <LandingPage onSelect={setMode} onOpenLab={() => setShowLab(true)} />;
 }
