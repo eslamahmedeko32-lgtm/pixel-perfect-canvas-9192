@@ -4,14 +4,14 @@ import { UploadCloud, ImageIcon, Loader2, Sparkles, AlertCircle } from "lucide-r
 interface UploadZoneProps {
   accent: "emerald" | "blue" | "amber";
   onGenerate: () => void;
-  generating?: boolean;
+  generating?: boolean | undefined;
   prompt: string;
   setPrompt: (v: string) => void;
-  promptPlaceholder?: string;
-  generateLabel?: string;
-  imageUrl?: string;
-  onImageChange?: (url: string | null) => void;
-  children?: ReactNode;
+  promptPlaceholder?: string | undefined;
+  generateLabel?: string | undefined;
+  imageUrl?: string | undefined;
+  onImageChange?: ((url: string | null) => void) | undefined;
+  children?: ReactNode | undefined;
 }
 
 const ACCENT: Record<

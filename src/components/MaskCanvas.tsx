@@ -77,7 +77,7 @@ const MaskCanvas = forwardRef<MaskCanvasHandle, MaskCanvasProps>(
       const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
       let hasContent = false;
       for (let i = 3; i < data.length; i += 4) {
-        if (data[i] > 0) {
+        if ((data[i] ?? 0) > 0) {
           hasContent = true;
           break;
         }

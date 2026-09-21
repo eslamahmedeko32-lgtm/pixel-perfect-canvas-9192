@@ -108,7 +108,7 @@ function applyEffectsToCtx(
   effects: ParsedCommand["effects"]
 ) {
   for (const eff of effects) {
-    const p = eff.params;
+    const p = eff.params as Record<string, any>;
     switch (eff.type) {
       case "tint": {
         ctx.save();

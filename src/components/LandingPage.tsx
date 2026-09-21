@@ -81,7 +81,7 @@ export default function LandingPage({ onSelect }: LandingPageProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14 w-full max-w-5xl">
           {MODES.map((mode, idx) => {
             const Icon = ICONS[mode.icon];
-            const s = ACCENT_STYLES[mode.accent];
+            const s = ACCENT_STYLES[mode.accent]!;
             return (
               <button
                 key={mode.id}
