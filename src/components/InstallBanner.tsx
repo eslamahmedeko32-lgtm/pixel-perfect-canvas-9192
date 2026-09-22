@@ -83,7 +83,7 @@ export default function InstallBanner() {
                 <X className="h-4 w-4" />
               </button>
             </div>
-            {showIosSteps ? (
+            {stepsOpen ? (
               <button
                 type="button"
                 onClick={() => setStepsOpen(true)}
