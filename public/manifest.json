@@ -1,0 +1,33 @@
+{
+  "name": "ديكور AI — تصميم بالذكاء الاصطناعي",
+  "short_name": "ديكور AI",
+  "description": "ارفع صورة واجهتك أو غرفتك واكتب طلبك بالعربية لتحصل على تصميم جديد فوراً: واجهات، كلادنج، نيون، وتجديد المنازل.",
+  "lang": "ar",
+  "dir": "rtl",
+  "display": "standalone",
+  "orientation": "any",
+  "start_url": "/",
+  "scope": "/",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ]
+}
