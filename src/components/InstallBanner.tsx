@@ -7,7 +7,7 @@ const DISMISS_KEY = "pwa-install-dismissed";
 export default function InstallBanner() {
   const { canInstall, showIosGuide, isStandalone, promptInstall } = usePwaInstall();
   const [dismissed, setDismissed] = useState(true);
-  const [showIosSteps, setShowIosSteps] = useState(false);
+  const [stepsOpen, setStepsOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -86,7 +86,7 @@ export default function InstallBanner() {
             {showIosSteps ? (
               <button
                 type="button"
-                onClick={() => setShowIosSteps(true)}
+                onClick={() => setStepsOpen(true)}
                 className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground transition-opacity hover:opacity-90"
               >
                 <Download className="h-4 w-4" />
