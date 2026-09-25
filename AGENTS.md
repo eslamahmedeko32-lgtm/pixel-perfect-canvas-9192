@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- شاشة البداية تستخدم معرض الواجهات المحلي المتحرك فقط، لتظل الصور متاحة دون اتصال ولا تعتمد على روابط خارجية.
