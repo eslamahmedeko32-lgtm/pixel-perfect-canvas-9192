@@ -96,7 +96,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", type: "image/png", href: "/favicon.png" },
       { rel: "apple-touch-icon", href: "/icons/apple-touch-icon.png" },
       { rel: "manifest", href: "/manifest.json" },
-      { name: "theme-color", content: "#042f2e" },
+      { name: "theme-color", content: "#020617" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -111,16 +111,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
-const FIRST_PAINT_CSS =
-  "html,body{margin:0;background-color:#042f2e;color:#ecfeff}" +
-  "body{background-image:radial-gradient(120% 80% at 50% 0%,rgba(45,212,191,0.35),rgba(4,47,46,0) 60%)}";
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="ar" dir="rtl" className="dark">
       <head>
-        {/* Inline first-paint background: the opening screen never shows black text on white. */}
-        <style dangerouslySetInnerHTML={{ __html: FIRST_PAINT_CSS }} />
         <HeadContent />
       </head>
       <body>

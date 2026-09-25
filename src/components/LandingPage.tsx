@@ -63,7 +63,6 @@ export default function LandingPage({ onSelect, onOpenLab }: LandingPageProps) {
 
       {/* Hero */}
       <section className="relative z-10 flex flex-col items-center justify-center px-6 pt-12 pb-20 text-center">
-        <div className="start-glow w-full max-w-3xl rounded-[32px] px-5 py-8 sm:px-9 sm:py-10">
           <span className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-sm font-medium border border-emerald-500/20 animate-fade-in">
             <Sparkles className="w-4 h-4" />
             منصة الذكاء الاصطناعي للديكور والواجهات
@@ -78,7 +77,6 @@ export default function LandingPage({ onSelect, onOpenLab }: LandingPageProps) {
           <p className="text-slate-400 text-lg max-w-xl mt-5 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
             اختر الواجهة المناسبة لاحتياجاتك لنبدأ التصميم فورااً — بكل بساطة وبالعامية المصرية والعربية.
           </p>
-        </div>
 
         {/* Mode cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14 w-full max-w-5xl">
