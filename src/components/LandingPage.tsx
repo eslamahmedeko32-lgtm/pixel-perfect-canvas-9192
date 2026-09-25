@@ -10,6 +10,7 @@ import {
   Cpu,
 } from "lucide-react";
 import { MODES, type AppMode } from "@/types";
+import FacadeShowcase from "@/components/FacadeShowcase";
 
 const ICONS = { Building2, Palette, Sofa } as const;
 
@@ -88,14 +89,16 @@ export default function LandingPage({ onSelect, onOpenLab }: LandingPageProps) {
           منصة الذكاء الاصطناعي للديكور والواجهات
         </span>
 
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight mt-6 max-w-3xl leading-tight animate-fade-in-up">
+        <FacadeShowcase />
+
+        <h1 className="intro-glow text-4xl md:text-6xl font-bold tracking-tight mt-8 max-w-3xl leading-tight animate-fade-in-up">
           صمّم واجهاتك وغرفك
           <br />
           <span className="gradient-text">بالذكاء الاصطناعي</span> في ثوانٍ
         </h1>
 
         <p
-          className="text-warm-white text-lg max-w-xl mt-5 animate-fade-in-up"
+          className="intro-glow-copy text-warm-white text-lg max-w-xl mt-5 animate-fade-in-up"
           style={{ animationDelay: "0.1s" }}
         >
           اختر الواجهة المناسبة لاحتياجاتك لنبدأ التصميم فورااً — بكل بساطة وبالعامية المصرية
