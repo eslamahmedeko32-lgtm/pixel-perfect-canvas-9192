@@ -286,3 +286,35 @@ body {
 .radial-glow {
   background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.12) 0%, transparent 60%);
 }
+
+/* ===== Start message panel: glowing turquoise backdrop ===== */
+.start-glow {
+  position: relative;
+  background:
+    radial-gradient(120% 110% at 50% 0%, rgba(45, 212, 191, 0.22) 0%, rgba(13, 148, 136, 0.10) 45%, rgba(2, 6, 23, 0) 78%),
+    linear-gradient(180deg, rgba(20, 184, 166, 0.14) 0%, rgba(8, 51, 68, 0.22) 100%);
+  border: 1px solid rgba(45, 212, 191, 0.30);
+  box-shadow:
+    0 0 55px -12px rgba(45, 212, 191, 0.45),
+    inset 0 0 45px rgba(45, 212, 191, 0.07);
+  animation: glow-breathe 5s ease-in-out infinite;
+}
+
+@keyframes glow-breathe {
+  0%, 100% {
+    box-shadow:
+      0 0 55px -12px rgba(45, 212, 191, 0.45),
+      inset 0 0 45px rgba(45, 212, 191, 0.07);
+  }
+  50% {
+    box-shadow:
+      0 0 85px -8px rgba(45, 212, 191, 0.62),
+      inset 0 0 60px rgba(45, 212, 191, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .start-glow {
+    animation: none;
+  }
+}
