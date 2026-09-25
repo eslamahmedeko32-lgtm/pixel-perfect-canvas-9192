@@ -95,7 +95,7 @@ export default function LandingPage({ onSelect, onOpenLab }: LandingPageProps) {
         </h1>
 
         <p
-          className="text-slate-400 text-lg max-w-xl mt-5 animate-fade-in-up"
+          className="text-warm-white text-lg max-w-xl mt-5 animate-fade-in-up"
           style={{ animationDelay: "0.1s" }}
         >
           اختر الواجهة المناسبة لاحتياجاتك لنبدأ التصميم فورااً — بكل بساطة وبالعامية المصرية
